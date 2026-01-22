@@ -1,4 +1,4 @@
-import { GoogleGenerativeAI, FunctionDeclarationSchemaType } from '@google/generative-ai';
+import { GoogleGenerativeAI, SchemaType } from '@google/generative-ai';
 import { performRAGSearch, policiesToContext, extractQueryContext, searchPolicies, Policy } from '@/lib/local-rag';
 import { savePolicyToNotion, isNotionEnabled } from '@/lib/notion-client';
 
@@ -44,10 +44,10 @@ const functionDeclarations = [
     name: 'saveToNotion',
     description: '사용자가 관심있는 정책을 Notion에 저장합니다. 사용자가 "저장해줘", "노션에 저장", "북마크해줘" 등을 요청할 때 호출합니다.',
     parameters: {
-      type: FunctionDeclarationSchemaType.OBJECT,
+      type: SchemaType.OBJECT,
       properties: {
         policyTitle: {
-          type: FunctionDeclarationSchemaType.STRING,
+          type: SchemaType.STRING,
           description: '저장할 정책의 정확한 이름 (예: "청년 월세 지원 사업")',
         },
       },
