@@ -1,4 +1,4 @@
-import { GoogleGenerativeAI, SchemaType } from '@google/generative-ai';
+import { GoogleGenerativeAI, SchemaType, Tool } from '@google/generative-ai';
 import { performRAGSearch, policiesToContext, extractQueryContext, searchPolicies, Policy } from '@/lib/local-rag';
 import { savePolicyToNotion, isNotionEnabled } from '@/lib/notion-client';
 
@@ -38,21 +38,25 @@ const BASE_SYSTEM_PROMPT = `당신은 "폴리 AI"입니다. 청년들을 위한 
 - 운영 기관: (담당 기관)
 - 신청 방법: (URL 또는 방문처)`;
 
-// Gemini Function Declarations
-const functionDeclarations = [
+// Gemini Function Declarations - 타입을 명시적으로 정의
+const notionTools: Tool[] = [
   {
-    name: 'saveToNotion',
-    description: '사용자가 관심있는 정책을 Notion에 저장합니다. 사용자가 "저장해줘", "노션에 저장", "북마크해줘" 등을 요청할 때 호출합니다.',
-    parameters: {
-      type: SchemaType.OBJECT,
-      properties: {
-        policyTitle: {
-          type: SchemaType.STRING,
-          description: '저장할 정책의 정확한 이름 (예: "청년 월세 지원 사업")',
+    functionDeclarations: [
+      {
+        name: 'saveToNotion',
+        description: '사용자가 관심있는 정책을 Notion에 저장합니다. 사용자가 "저장해줘", "노션에 저장", "북마크해줘" 등을 요청할 때 호출합니다.',
+        parameters: {
+          type: SchemaType.OBJECT,
+          properties: {
+            policyTitle: {
+              type: SchemaType.STRING,
+              description: '저장할 정책의 정확한 이름 (예: "청년 월세 지원 사업")',
+            },
+          },
+          required: ['policyTitle'],
         },
       },
-      required: ['policyTitle'],
-    },
+    ],
   },
 ];
 
@@ -120,7 +124,7 @@ ${notionStatus}
     const model = genAI.getGenerativeModel({ 
       model: 'gemini-2.0-flash-exp',
       systemInstruction: systemPromptWithContext,
-      tools: notionEnabled ? [{ functionDeclarations }] : undefined,
+      tools: notionEnabled ? notionTools : undefined,
     });
     
     // 메시지 히스토리 구성
