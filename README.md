@@ -1,19 +1,11 @@
 # 🎯 폴리(Policy) AI - 청년 정책 AI 어드바이저
 
-> 3,000개 청년 정책에서 **AI가 너에게 딱 맞는 정책**을 찾아줍니다!
+> 3,000개 청년 정책에서 **AI가 사용자에게 딱 맞는 정책**을 찾아줍니다!
 
 ![Next.js](https://img.shields.io/badge/Next.js-14-black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)
 ![Gemini](https://img.shields.io/badge/Gemini-AI-blue)
 ![RAG](https://img.shields.io/badge/RAG-Enabled-purple)
-
-## 🌐 라이브 데모
-
-**🚀 배포된 사이트**: 배포 후 링크가 여기에 표시됩니다
-
-**📦 원클릭 배포**: [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/wrtn-edu-swu-bootcamp/project_14)
-
----
 
 ## 💡 왜 폴리 AI인가?
 
@@ -67,58 +59,6 @@
 - AI 응답 성공률: 100% (100회 테스트)
 - 검색 정확도: 96% (50회 중 48회)
 - 평균 응답 시간: 2초
-
----
-
-## 🏗️ 기술 스택
-
-### Frontend
-- **Next.js 14** (App Router)
-- **React 18** + TypeScript
-- **Tailwind CSS**
-- **Lucide React** (아이콘)
-
-### Backend & AI
-- **Google Gemini AI** (무료, gemini-2.0-flash-exp)
-- **Vercel AI SDK** (스트리밍, Tool Calling)
-- **RAG Pipeline** (검색 증강 생성)
-- **Notion API** (북마크 기능)
-
-### Deployment
-- **Vercel** (서버리스, Edge Functions)
-
----
-
-## 🚀 빠른 시작
-
-### Option 1: Vercel로 바로 배포 (추천!)
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/wrtn-edu-swu-bootcamp/project_14)
-
-1. 위 버튼 클릭
-2. GitHub 계정으로 로그인
-3. 환경 변수 설정:
-   - `GEMINI_API_KEY`: [Google AI Studio](https://aistudio.google.com/apikey)에서 발급 (무료)
-   - `NOTION_API_KEY` (선택): Notion 연동 시
-   - `NOTION_DATABASE_ID` (선택): Notion 데이터베이스 ID
-4. Deploy 클릭!
-
-**5분 안에 배포 완료!** 🎉
-
-### Option 2: 로컬 개발
-
-```bash
-git clone https://github.com/wrtn-edu-swu-bootcamp/project_14.git
-cd project_14
-npm install
-
-# .env.local 파일 생성
-echo "GEMINI_API_KEY=your_key" > .env.local
-
-npm run dev
-```
-
-http://localhost:3000 접속
 
 ---
 
@@ -218,87 +158,7 @@ policy-ai-advisor/
 - ✅ 여러 조건 동시 고려 (나이 + 지역 + 소득)
 - ✅ 관련도 점수로 신뢰도 표시
 
-### AI Function Calling
 
-```typescript
-tools: {
-  search_youth_policies: tool({
-    description: 'RAG 의미론적 검색으로 정책 찾기',
-    execute: async ({ query, age, region }) => {
-      const results = await searchPolicies(query, { age, region });
-      return results; // 관련도 점수 포함
-    }
-  }),
-  
-  calculate_median_income: tool({
-    description: '중위소득 자동 계산',
-    execute: async ({ householdSize, monthlyIncome }) => {
-      // 2026년 기준 중위소득 계산
-      return calculateIncomePercentile(householdSize, monthlyIncome);
-    }
-  }),
-  
-  saveToNotion: tool({
-    description: '정책을 Notion에 저장',
-    execute: async ({ policy }) => {
-      return await savePolicyToNotion(policy);
-    }
-  })
-}
-```
-
----
-
-## 💰 비용 (100% 무료!)
-
-| 항목 | 비용 | 설명 |
-|------|------|------|
-| **Google Gemini AI** | 무료 | gemini-2.0-flash-exp 모델 |
-| **Vercel 호스팅** | 무료 | Hobby 플랜 |
-| **Notion API** | 무료 | 개인 사용 |
-| **총합** | **무료** | 🎉 |
-
----
-
-## 🚀 배포 가이드
-
-### 방법 1: GitHub 연동 (추천)
-
-1. GitHub에 푸시
-2. [Vercel Dashboard](https://vercel.com/new) 접속
-3. "Import Project" → GitHub 저장소 선택
-4. 환경 변수 입력:
-   ```
-   GEMINI_API_KEY=your_gemini_key
-   NOTION_API_KEY=your_notion_key (선택)
-   NOTION_DATABASE_ID=your_db_id (선택)
-   ```
-5. Deploy 클릭!
-
-### 방법 2: Vercel CLI
-
-```bash
-# Vercel CLI 설치
-npm install -g vercel
-
-# 로그인
-vercel login
-
-# 배포
-vercel
-
-# 프로덕션 배포
-vercel --prod
-```
-
-### 배포 후 확인사항
-
-- ✅ 환경 변수 설정 확인
-- ✅ Build 로그에서 에러 확인
-- ✅ 실제 사이트에서 AI 응답 테스트
-- ✅ Notion 연동 테스트 (설정한 경우)
-
----
 
 ## 📚 문서
 
